@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W8NM0PC23D"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W8NM0PC23D');
+</script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
+<title>割り勘・精算計算ツール｜誰が誰にいくら払うか自動で計算</title>
+<meta name="description" content="割り勘と立て替え精算をまとめて計算できる無料ツール。飲み会・旅行・買い出しで「誰が誰にいくら払えばいいか」を、送金の回数が一番少なくなる形で自動計算します。登録不要で、入力した内容はどこにも送信されません。">
+<link rel="canonical" href="https://mini-tools-lab.github.io/warikan/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="割り勘・精算計算ツール">
+<meta property="og:title" content="割り勘・精算計算ツール｜誰が誰にいくら払うか自動で計算">
+<meta property="og:description" content="飲み会・旅行の立て替えをすっきり精算。合計を人数で割るクイック割り勘と、複数人の立て替え精算に対応。登録不要・無料で使えます。">
+<meta property="og:url" content="https://mini-tools-lab.github.io/warikan/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="割り勘・精算計算ツール｜誰が誰にいくら払うか自動で計算">
+<meta name="twitter:description" content="飲み会・旅行の立て替えをすっきり精算。誰が誰にいくら払えばいいか、送金回数が一番少なくなる形で自動計算。登録不要・無料。">
+<style>
+:root{
+--bg:#f3f5f0; --surface:#ffffff; --surface2:#eef3ec; --text:#1a2e28; --muted:#5b6b64; --line:#dde5dc;
+--primary:#0f766e; --primary-dark:#0b5e57; --primary-soft:#e0f2ef; --accent:#e86a33; --accent-soft:#fff0e6;
+--danger:#dc2626; --ok:#15803d; --radius:18px; --shadow:0 4px 24px rgba(20,50,40,.08);
+}
+@media (prefers-color-scheme: dark){
+:root{ --bg:#101613; --surface:#1a211e; --surface2:#232d28; --text:#e8f0ec; --muted:#9db0a6; --line:#2e3a34; --primary:#2dd4bf; --primary-dark:#2dd4bf; --primary-soft:#14332f; --accent:#fb923c; --accent-soft:#3a2415; --shadow:0 4px 24px rgba(0,0,0,.35);}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic UI","Yu Gothic",Meiryo,sans-serif;line-height:1.6}
+button,input,select{font:inherit;min-height:44px}
+h1,h2{font-family:"Hiragino Maru Gothic ProN","Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;font-weight:700;line-height:1.3;margin:0}
+.wrap{max-width:980px;margin:0 auto;padding:20px 16px 48px}
+.hero{padding:8px 2px 18px}
+.hero h1{font-size:32px;font-weight:900;letter-spacing:.02em}
+.hero h1 span{color:var(--primary)}
+.hero p{color:var(--muted);margin:8px 0 0;font-size:15px;max-width:640px}
+.quick{background:var(--primary);color:#fff;border-radius:20px;padding:20px;box-shadow:var(--shadow)}
+@media(prefers-color-scheme:dark){.quick{background:#0f3d38}}
+.quick h2{font-size:19px;color:#fff}
+.quick-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:14px}
+@media(max-width:640px){.quick-grid{grid-template-columns:1fr 1fr}.quick-grid.full{grid-column:1/-1}}
+.quick label{font-size:13px;font-weight:700;display:block;margin-bottom:6px;opacity:.95}
+.quick input,.quick select{width:100%;border:0;border-radius:12px;padding:10px 12px;background:#fff;color:#111;font-size:15px}
+.quick-result{margin-top:16px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:14px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.quick-result b{font-size:28px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+.card h2{font-size:18px;display:flex;align-items:center;gap:8px}
+.num{width:28px;height:28px;border-radius:50%;background:var(--primary-soft);color:var(--primary);display:inline-flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.hint{font-size:13px;color:var(--muted);margin:6px 0 12px}
+.row{display:flex;gap:8px}
+.row input{flex:1}
+input,select{border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--surface);color:var(--text);width:100%}
+input:focus,select:focus{outline:2px solid var(--primary);outline-offset:1px;border-color:transparent}
+.btn{border:0;border-radius:12px;padding:10px 16px;font-weight:700;cursor:pointer;background:var(--primary);color:#fff;white-space:nowrap}
+.btn:hover{background:var(--primary-dark)}
+.btn-sub{background:var(--surface2);color:var(--text)}
+.btn-accent{background:var(--accent);color:#fff}
+.btn-accent:hover{filter:brightness(.95);background:var(--accent)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--primary-soft);padding:6px 6px 6px 12px;border-radius:999px;font-weight:700;font-size:14px}
+.chip button{width:32px;height:32px;min-height:32px;border:0;border-radius:50%;background:var(--surface);cursor:pointer;line-height:1}
+.field{margin-bottom:12px}
+.field label{font-size:13px;font-weight:700;display:block;margin-bottom:5px}
+.split-list{display:flex;flex-wrap:wrap;gap:8px}
+.split-item{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);border-radius:999px;padding:8px 12px;cursor:pointer;font-size:14px;min-height:40px}
+.split-item:has(input:checked){background:var(--primary-soft);border-color:var(--primary);font-weight:700}
+.split-item input{width:18px;height:18px;min-height:18px;accent-color:var(--primary)}
+.exp-item{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+.exp-item:last-child{border-bottom:0}
+.exp-item small{color:var(--muted);display:block}
+.exp-amt{font-weight:900;white-space:nowrap}
+.icon-btn{border:0;background:var(--surface2);width:36px;height:36px;border-radius:10px;cursor:pointer}
+.result-card{margin-top:16px}
+.total-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+@media(max-width:560px){.total-bar{grid-template-columns:1fr 1fr 1fr;gap:6px}.total-box{padding:10px 6px!important}.total-box b{font-size:16px!important}}
+.total-box{background:var(--surface2);border-radius:14px;padding:14px;text-align:center}
+.total-box span{font-size:12px;color:var(--muted);display:block}
+.total-box b{font-size:20px}
+.person-row{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.person-row:last-child{border:0}
+.avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;flex-shrink:0}
+.person-meta{flex:1;min-width:140px}
+.person-meta small{color:var(--muted)}
+.badge{font-size:12px;font-weight:700;padding:4px 9px;border-radius:999px}
+.badge-plus{background:#dcfce7;color:#166534}.badge-minus{background:#fee2e2;color:#991b1b}.badge-zero{background:var(--surface2);color:var(--muted)}
+@media(prefers-color-scheme:dark){.badge-plus{background:#14532d;color:#bbf7d0}.badge-minus{background:#450a0a;color:#fecaca}}
+.settle{background:var(--accent-soft);border:1.5px dashed #f0b48a;border-radius:14px;padding:14px;margin-top:14px}
+.settle-row{display:flex;align-items:center;gap:8px;padding:8px 0;font-weight:700;flex-wrap:wrap}
+.arrow{color:var(--accent)}
+.empty{color:var(--muted);text-align:center;padding:20px 8px;font-size:14px;border:1.5px dashed var(--line);border-radius:12px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.actions button{flex:1;min-width:130px;white-space:normal;line-height:1.4;padding:12px 10px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(80px);background:#111;color:#fff;padding:12px 18px;border-radius:999px;font-weight:700;transition:.25s;z-index:10}
+.toast.show{transform:translateX(-50%) translateY(0)}
+footer{margin-top:28px;color:var(--muted);font-size:13px;text-align:center}
+footer a{color:var(--primary);font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+<h1>割り勘・<span>精算</span>計算ツール</h1>
+<p>飲み会・旅行・買い出しの立て替えを、すっきり精算。誰が誰にいくら払えばいいか、送金の回数が一番少なくなる形で計算します。</p>
+</header>
+
+<!-- Quick -->
+<section class="quick" aria-labelledby="quick-h">
+<h2 id="quick-h">⚡ クイック割り勘（合計を人数で割るだけ）</h2>
+<div class="quick-grid">
+<div><label for="q-total">合計金額（円）</label><input id="q-total" type="number" inputmode="numeric" min="0" placeholder="例：12800" value="12800"></div>
+<div><label for="q-people">人数</label><input id="q-people" type="number" inputmode="numeric" min="1" value="4"></div>
+<div class="full"><label for="q-round">端数の丸め方</label><select id="q-round"><option value="1">1円（きっちり）</option><option value="10">10円切り上げ</option><option value="100" selected>100円切り上げ</option><option value="500">500円切り上げ</option><option value="1000">1,000円切り上げ</option></select></div>
+</div>
+<div class="quick-result">
+<div>1人あたり<br><b id="q-per">¥3,200</b></div>
+<div id="q-note" style="font-size:14px;opacity:.95">集める合計 ¥12,800 ・ あまり ¥0</div>
+</div>
+</section>
+
+<div class="grid">
+<!-- Members -->
+<section class="card">
+<h2><span class="num">1</span> メンバー</h2>
+<p class="hint">割り勘する人を追加してください。名前は後からでも大丈夫です。</p>
+<div class="row"><input id="member-input" type="text" placeholder="名前を入力（例：山田）" maxlength="20"><button class="btn" id="add-member">追加</button></div>
+<div class="chips" id="member-chips"></div>
+</section>
+
+<!-- Expense form -->
+<section class="card">
+<h2><span class="num">2</span> 支払いを追加</h2>
+<p class="hint">誰かが立て替えた支払いを1件ずつ入れてください。</p>
+<div class="field"><label for="exp-title">内容</label><input id="exp-title" type="text" placeholder="例：居酒屋、タクシー、食材" maxlength="40"></div>
+<div class="row" style="margin-bottom:12px">
+<div style="flex:1"><label for="exp-payer" style="font-size:13px;font-weight:700;display:block;margin-bottom:5px">払った人</label><select id="exp-payer"></select></div>
+<div style="flex:1"><label for="exp-amount" style="font-size:13px;font-weight:700;display:block;margin-bottom:5px">金額（円）</label><input id="exp-amount" type="number" inputmode="numeric" min="1" placeholder="例：6000"></div>
+</div>
+<div class="field"><label>割り勘する人（タップでON／OFF）</label><div class="split-list" id="split-list"></div></div>
+<button class="btn btn-accent" id="add-exp" style="width:100%">＋ この支払いを追加する</button>
+<div id="exp-list" style="margin-top:8px"></div>
+</section>
+</div>
+
+<!-- Result -->
+<section class="card result-card">
+<h2><span class="num">3</span> 精算結果</h2>
+<div class="total-bar">
+<div class="total-box"><span>合計金額</span><b id="r-total">¥0</b></div>
+<div class="total-box"><span>支払い件数</span><b id="r-count">0件</b></div>
+<div class="total-box"><span>1人あたり目安</span><b id="r-avg">¥0</b></div>
+</div>
+<div id="person-results"></div>
+<div id="settle-box"></div>
+<div class="actions">
+<button class="btn" id="copy-btn">📋 結果をコピー</button>
+<button class="btn btn-sub" id="reset-btn">すべてリセット</button>
+</div>
+</section>
+
+<footer>入力した内容はこの画面の中だけで計算され、どこにも保存・送信されません。<br><a href="guide.html">📖 使い方ガイド：割り勘の端数の扱い方と立て替え精算の具体例</a></footer>
+</div>
+<div class="toast" id="toast">コピーしました</div>
+
+<script>
+var COLORS=['#0f766e','#e86a33','#2563eb','#9333ea','#db2777','#ca8a04','#0891b2','#65a30d'];
+var members=[]; var expenses=[]; var uid=1;
+function $(id){return document.getElementById(id)}
+function yen(n){return '¥'+Math.round(n).toLocaleString('ja-JP')}
+function esc(s){return s.replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function toast(msg){var t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},2200)}
+
+// Quick calc
+function quick(){
+var total=parseFloat($('q-total').value)||0; var people=Math.max(1,parseInt($('q-people').value)||1); var unit=parseInt($('q-round').value)||1;
+var raw=total/people; var per=unit===1?Math.ceil(raw):Math.ceil(raw/unit)*unit;
+var collect=per*people; var diff=collect-total;
+$('q-per').textContent=yen(per);
+$('q-note').textContent='集める合計 '+yen(collect)+(diff>0?' ・ あまり '+yen(diff)+'（幹事さんのおつり／次回分に）':diff===0?' ・ ぴったりです':'');
+}
+['q-total','q-people','q-round'].forEach(function(id){$(id).addEventListener('input',quick);$(id).addEventListener('change',quick)});
+
+// Members
+function addMember(name){
+name=(name||'').trim(); if(!name){toast('名前を入力してね');return}
+members.push({id:uid++,name:name}); renderAll();
+}
+$('add-member').addEventListener('click',function(){addMember($('member-input').value);$('member-input').value='';$('member-input').focus()});
+$('member-input').addEventListener('keydown',function(e){if(e.key==='Enter'){addMember(this.value);this.value=''}});
+function removeMember(id){
+members=members.filter(function(m){return m.id!==id});
+expenses=expenses.filter(function(e){return e.payerId!==id}).map(function(e){e.splitIds=e.splitIds.filter(function(s){return s!==id});return e}).filter(function(e){return e.splitIds.length});
+renderAll();
+}
+
+// Expenses
+$('add-exp').addEventListener('click',function(){
+var title=$('exp-title').value.trim()||'支払い';
+var payerId=parseInt($('exp-payer').value);
+var amount=parseFloat($('exp-amount').value)||0;
+var checks=document.querySelectorAll('#split-list input:checked');
+var splitIds=[]; checks.forEach(function(c){splitIds.push(parseInt(c.value))});
+if(!members.length){toast('先にメンバーを追加してね');return}
+if(!amount||amount<=0){toast('金額を入力してね');return}
+if(!splitIds.length){toast('割り勘する人を選んでね');return}
+expenses.push({id:uid++,title:title,payerId:payerId,amount:amount,splitIds:splitIds});
+$('exp-title').value=''; $('exp-amount').value=''; renderAll(); toast('支払いを追加しました');
+});
+function removeExp(id){expenses=expenses.filter(function(e){return e.id!==id});renderAll()}
+
+function calc(){
+var paid={},share={};
+members.forEach(function(m){paid[m.id]=0;share[m.id]=0});
+expenses.forEach(function(e){
+if(paid[e.payerId]!==undefined) paid[e.payerId]+=e.amount;
+var per=e.amount/e.splitIds.length;
+e.splitIds.forEach(function(id){if(share[id]!==undefined)share[id]+=per});
+});
+var bal={}; members.forEach(function(m){bal[m.id]=paid[m.id]-share[m.id]});
+return {paid:paid,share:share,bal:bal};
+}
+function settlements(bal){
+var creditors=[],debtors=[];
+members.forEach(function(m){var v=Math.round(bal[m.id]*100)/100; if(v>0.5)creditors.push({id:m.id,v:v}); if(v<-0.5)debtors.push({id:m.id,v:-v})});
+creditors.sort(function(a,b){return b.v-a.v}); debtors.sort(function(a,b){return b.v-a.v});
+var res=[]; var i=0,j=0;
+while(i<debtors.length&&j<creditors.length){
+var amt=Math.min(debtors[i].v,creditors[j].v); var rounded=Math.round(amt);
+if(rounded>0)res.push({from:debtors[i].id,to:creditors[j].id,amount:rounded});
+debtors[i].v-=amt; creditors[j].v-=amt;
+if(debtors[i].v<0.5)i++; if(creditors[j].v<0.5)j++;
+}
+return res;
+}
+function nameOf(id){var m=members.find(function(x){return x.id===id});return m?m.name:'?'}
+
+function renderAll(){
+// chips
+$('member-chips').innerHTML=members.length?members.map(function(m,idx){
+return '<span class="chip"><span style="width:10px;height:10px;border-radius:50%;background:'+COLORS[idx%COLORS.length]+';display:inline-block"></span>'+esc(m.name)+'<button aria-label="削除" onclick="removeMember('+m.id+')">×</button></span>'
+}).join(''):'<span style="color:var(--muted);font-size:14px">まだメンバーがいません</span>';
+// payer select
+var cur=$('exp-payer').value;
+$('exp-payer').innerHTML=members.map(function(m){return '<option value="'+m.id+'">'+esc(m.name)+'</option>'}).join('');
+if(cur) $('exp-payer').value=cur;
+// split list
+$('split-list').innerHTML=members.length?members.map(function(m){return '<label class="split-item"><input type="checkbox" value="'+m.id+'" checked>'+esc(m.name)+'</label>'}).join(''):'<span style="color:var(--muted);font-size:14px">メンバーを追加すると選べます</span>';
+// expense list
+$('exp-list').innerHTML=expenses.length?expenses.map(function(e){
+return '<div class="exp-item"><div><strong>'+esc(e.title)+'</strong><small>'+esc(nameOf(e.payerId))+' が支払い ・ '+e.splitIds.length+'人で割り勘</small></div><div style="text-align:right"><div class="exp-amt">'+yen(e.amount)+'</div><button class="icon-btn" onclick="removeExp('+e.id+')" aria-label="削除">🗑</button></div></div>'
+}).join(''):'<div class="empty" style="margin-top:14px">まだ支払いがありません。<br>上のフォームから追加してみてね。</div>';
+// results
+var c=calc(); var total=expenses.reduce(function(s,e){return s+e.amount},0);
+$('r-total').textContent=yen(total); $('r-count').textContent=expenses.length+'件'; $('r-avg').textContent=members.length?yen(total/members.length):'¥0';
+if(!members.length){$('person-results').innerHTML='<div class="empty">メンバーと支払いを入れると、ここに精算結果が出ます</div>';$('settle-box').innerHTML='';return}
+$('person-results').innerHTML=members.map(function(m,idx){
+var b=c.bal[m.id]; var badge=b>0.5?'<span class="badge badge-plus">'+yen(b)+' 受け取る</span>':b<-0.5?'<span class="badge badge-minus">'+yen(-b)+' 払う</span>':'<span class="badge badge-zero">精算なし</span>';
+return '<div class="person-row"><div class="avatar" style="background:'+COLORS[idx%COLORS.length]+'">'+esc(m.name.slice(0,1))+'</div><div class="person-meta"><strong>'+esc(m.name)+'</strong><br><small>払った '+yen(c.paid[m.id])+' ／ 負担 '+yen(c.share[m.id])+'</small></div>'+badge+'</div>'
+}).join('');
+var st=settlements(c.bal);
+$('settle-box').innerHTML=expenses.length?(st.length?'<div class="settle"><strong>💸 精算はこれだけ（'+st.length+'回）</strong>'+st.map(function(s){return '<div class="settle-row"><span>'+esc(nameOf(s.from))+'</span><span class="arrow">── '+yen(s.amount)+' ──▶</span><span>'+esc(nameOf(s.to))+'</span></div>'}).join('')+'</div>':'<div class="settle"><strong>🎉 全員ぴったり！精算は不要です</strong></div>'):'';
+}
+
+// Copy
+$('copy-btn').addEventListener('click',function(){
+if(!expenses.length){toast('まず支払いを追加してね');return}
+var c=calc(); var st=settlements(c.bal); var total=expenses.reduce(function(s,e){return s+e.amount},0);
+var lines=['','合計：'+yen(total)+'（'+expenses.length+'件）',''];
+lines.push('— 内訳 —');
+expenses.forEach(function(e){lines.push('・'+e.title+'：'+yen(e.amount)+'（'+nameOf(e.payerId)+'）')});
+lines.push(''); lines.push('— 精算 —');
+if(st.length) st.forEach(function(s){lines.push(nameOf(s.from)+' → '+nameOf(s.to)+'：'+yen(s.amount))}); else lines.push('精算なし（全員ぴったり）');
+var text=lines.join('\n');
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){toast('コピーしました！LINEに貼ってね')},function(){fallbackCopy(text)})}else fallbackCopy(text);
+});
+function fallbackCopy(text){var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('コピーしました！')}catch(e){toast('コピーできませんでした')}document.body.removeChild(ta)}
+var resetArm=false;
+$('reset-btn').addEventListener('click',function(){
+  if(!resetArm){resetArm=true;this.textContent='本当に消しますか？もう一度タップ';setTimeout(function(){resetArm=false;$('reset-btn').textContent='すべてリセット'},3000);return}
+  members=[];expenses=[];resetArm=false;this.textContent='すべてリセット';renderAll();toast('リセットしました');
+});
+
+// Init sample: empty-friendly defaults (generic names user can delete)
+['メンバーA','メンバーB','メンバーC'].forEach(function(n){members.push({id:uid++,name:n})});
+quick(); renderAll();
+</script>
+</body>
+</html>

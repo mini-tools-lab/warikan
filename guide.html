@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W8NM0PC23D"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W8NM0PC23D');
+</script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
+<title>割り勘の端数の扱い方と立て替え精算のやり方｜割り勘・精算計算ツール ガイド</title>
+<meta name="description" content="割り勘で割り切れない金額（端数）をどうすればいいか、切り上げ・幹事負担などの扱い方を解説。3人の飲み会を例に、立て替え精算で「誰が誰にいくら払うか」が決まるまでの流れを具体例で紹介します。">
+<link rel="canonical" href="https://mini-tools-lab.github.io/warikan/guide.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="割り勘・精算計算ツール">
+<meta property="og:title" content="割り勘の端数の扱い方と立て替え精算のやり方">
+<meta property="og:description" content="割り切れない割り勘の端数はどうする？ 切り上げ・幹事負担などの扱い方と、3人の飲み会で立て替え精算をする具体例を解説。">
+<meta property="og:url" content="https://mini-tools-lab.github.io/warikan/guide.html">
+<meta name="twitter:card" content="summary">
+<style>
+:root{
+--bg:#f3f5f0; --surface:#ffffff; --surface2:#eef3ec; --text:#1a2e28; --muted:#5b6b64; --line:#dde5dc;
+--primary:#0f766e; --primary-dark:#0b5e57; --primary-soft:#e0f2ef; --accent:#e86a33; --accent-soft:#fff0e6;
+--radius:18px; --shadow:0 4px 24px rgba(20,50,40,.08);
+}
+@media (prefers-color-scheme: dark){
+:root{ --bg:#101613; --surface:#1a211e; --surface2:#232d28; --text:#e8f0ec; --muted:#9db0a6; --line:#2e3a34; --primary:#2dd4bf; --primary-dark:#2dd4bf; --primary-soft:#14332f; --accent:#fb923c; --accent-soft:#3a2415; --shadow:0 4px 24px rgba(0,0,0,.35);}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic UI","Yu Gothic",Meiryo,sans-serif;line-height:1.8}
+h1,h2,h3{font-family:"Hiragino Maru Gothic ProN","Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;font-weight:700;line-height:1.4;margin:0}
+.wrap{max-width:760px;margin:0 auto;padding:20px 16px 48px}
+.hero{padding:8px 2px 6px}
+.hero h1{font-size:27px;letter-spacing:.02em}
+.hero h1 span{color:var(--primary)}
+.hero p{color:var(--muted);margin:10px 0 0;font-size:15px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-top:16px;box-shadow:var(--shadow)}
+.card h2{font-size:19px;display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.card h3{font-size:16px;margin:18px 0 6px;color:var(--primary-dark)}
+.card p{margin:8px 0}
+.card ul,.card ol{margin:8px 0;padding-left:22px}
+.card li{margin:5px 0}
+.num{width:28px;height:28px;border-radius:50%;background:var(--primary-soft);color:var(--primary);display:inline-flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.example{background:var(--surface2);border-radius:14px;padding:14px 16px;margin:12px 0}
+.example p{margin:4px 0}
+.tbl-wrap{overflow-x:auto;margin:12px 0}
+table{border-collapse:collapse;width:100%;min-width:480px;font-size:14px}
+th,td{border:1px solid var(--line);padding:9px 10px;text-align:right}
+th{background:var(--primary-soft);color:var(--text);text-align:center;white-space:nowrap}
+td:first-child,th:first-child{text-align:left;white-space:nowrap}
+.plus{color:#15803d;font-weight:700}.minus{color:#dc2626;font-weight:700}
+@media(prefers-color-scheme:dark){.plus{color:#4ade80}.minus{color:#f87171}}
+.settle{background:var(--accent-soft);border:1.5px dashed #f0b48a;border-radius:14px;padding:14px 16px;margin-top:14px}
+.settle p{margin:5px 0;font-weight:700}
+.arrow{color:var(--accent)}
+.btn{display:inline-block;border:0;border-radius:12px;padding:13px 20px;font-weight:700;cursor:pointer;background:var(--primary);color:#fff;text-decoration:none;text-align:center;min-height:44px}
+.btn:hover{background:var(--primary-dark)}
+.cta{margin-top:22px;text-align:center}
+.cta .btn{width:100%;max-width:420px}
+.backlink{font-size:14px}
+.backlink a,footer a{color:var(--primary);font-weight:700}
+footer{margin-top:28px;color:var(--muted);font-size:13px;text-align:center}
+.note{font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+<p class="backlink"><a href="index.html">← 割り勘・精算計算ツールに戻る</a></p>
+<h1>割り勘の<span>端数</span>の扱い方と<br>立て替え精算のやり方</h1>
+<p>「割り切れない金額はどうするの？」「何人かで立て替えたとき、誰が誰にいくら払えばいいの？」——飲み会や旅行でよく出るこの2つの疑問を、具体例で解説します。</p>
+</header>
+
+<section class="card">
+<h2><span class="num">1</span> 割り勘の端数（割り切れない金額）の扱い方</h2>
+<p>合計が人数で割り切れないことはよくあります。たとえば<strong>10,000円を3人で割ると、1人あたり3,333.33…円</strong>になってしまいます。この端数の扱い方は、大きく分けて次の3パターンです。</p>
+
+<h3>① 切り上げて集める（一番おすすめ）</h3>
+<p>1人あたりを10円・100円などの単位で切り上げて集めます。余った分は幹事の手間賃にしたり、次回の集まりに繰り越したり、その場の追加注文に使ったりできます。</p>
+<div class="example">
+<p>・100円切り上げ：1人 <strong>3,400円</strong> × 3人 ＝ 10,200円（あまり 200円）</p>
+<p>・10円切り上げ：1人 <strong>3,340円</strong> × 3人 ＝ 10,020円（あまり 20円）</p>
+</div>
+<p>小銭のやり取りが減るので、現金でも送金アプリでも一番スムーズです。<a href="index.html">ツール</a>の「クイック割り勘」では、1円・10円・100円・500円・1,000円の切り上げ単位を選べます。</p>
+
+<h3>② 1円単位できっちり分ける</h3>
+<p>端数の数円だけ、誰かが少し多く（または少なく）負担します。10,000円を3人なら、<strong>3,334円・3,334円・3,332円</strong>という分け方です。送金アプリなら1円単位で送れるので、きっちりしたい派の人に向いています。誰が端数を引き受けるかは、幹事や立て替えた人が引き受けるのが角が立ちにくいです。</p>
+
+<h3>③ 幹事・年長者が端数を負担する</h3>
+<p>端数の数十円〜数百円を幹事や年長者が多めに持つ方法です。「まとめてくれてありがとう」という気持ちも込めやすく、目上の人との飲み会では暗黙の了解になっていることも多いです。</p>
+
+<p class="note">どのパターンでも大切なのは、<strong>集める前に「端数は切り上げね」の一言を添えること</strong>。後から「多く取られた」と感じる人が出ないよう、先に決めておくのがトラブル防止のコツです。</p>
+</section>
+
+<section class="card">
+<h2><span class="num">2</span> 立て替え精算の具体例（3人の飲み会）</h2>
+<p>何人かが別々に立て替えた場合は、まず「全員の支払い合計」と「1人あたりの負担額」を出して、差額をやり取りします。具体例で見てみましょう。</p>
+
+<div class="example">
+<p>🍺 居酒屋代 <strong>6,000円</strong> … Aさんが立て替え</p>
+<p>🚕 タクシー代 <strong>1,200円</strong> … Bさんが立て替え</p>
+<p>🧍 Cさんは立て替えなし</p>
+</div>
+
+<p>支払いの合計は 6,000 ＋ 1,200 ＝ <strong>7,200円</strong>。3人で割ると、1人あたりの負担額は <strong>2,400円</strong> です。各人の収支はこうなります。</p>
+
+<div class="tbl-wrap">
+<table>
+<tr><th>メンバー</th><th>払った額</th><th>負担額</th><th>差額</th></tr>
+<tr><td>Aさん</td><td>6,000円</td><td>2,400円</td><td class="plus">＋3,600円（受け取る）</td></tr>
+<tr><td>Bさん</td><td>1,200円</td><td>2,400円</td><td class="minus">－1,200円（払う）</td></tr>
+<tr><td>Cさん</td><td>0円</td><td>2,400円</td><td class="minus">－2,400円（払う）</td></tr>
+</table>
+</div>
+
+<p>「払う人」から「受け取る人」へ差額を送れば精算完了です。この例では送金はたった2回で済みます。</p>
+
+<div class="settle">
+<p>Bさん <span class="arrow">── 1,200円 ──▶</span> Aさん</p>
+<p>Cさん <span class="arrow">── 2,400円 ──▶</span> Aさん</p>
+</div>
+
+<p>ポイントは、<strong>「全員がいったん幹事に集める」方式にしないこと</strong>。差額だけをやり取りすれば、送金の回数が最小になります。人数や支払い件数が増えるほど手計算は大変になるので、そういうときは<a href="index.html">ツール</a>に支払いを入力するだけで、この精算の組み合わせを自動で計算できます。結果をコピーしてLINEに貼れば、そのままグループで共有できます。</p>
+
+<h3>負担を均等にしたくないときは？</h3>
+<p>たとえば「お酒を飲まなかった人はタクシー代だけ」「2次会は来た人だけ」という場合は、支払いごとに「その支払いを割り勘する人」を変えるのが正解です。ツールでは支払いごとに割り勘する人を選べるので、場面に合わせた精算ができます。</p>
+</section>
+
+<div class="cta">
+<a class="btn" href="index.html">🔢 割り勘・精算計算ツールを使ってみる（無料）</a>
+</div>
+
+<footer>計算はすべてブラウザの中で行われ、入力した内容が送信されることはありません。<br><a href="index.html">割り勘・精算計算ツール</a></footer>
+</div>
+</body>
+</html>
